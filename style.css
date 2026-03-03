@@ -1,0 +1,268 @@
+/* RESET TOTAL */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* BODY - MERAH KEHITAMAN */
+body {
+    background: #1a0000;
+    font-family: 'Courier New', monospace;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    color: #ff3333;
+    position: relative;
+}
+
+/* OVERLAY GELAP */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 50% 50%, rgba(50,0,0,0.3), #0a0000);
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* CONTAINER UTAMA */
+.container {
+    position: relative;
+    z-index: 1;
+    max-width: 900px;
+    width: 100%;
+    background: rgba(20, 0, 0, 0.9);
+    border: 2px solid #ff3333;
+    box-shadow: 0 0 30px rgba(255, 0, 0, 0.3),
+                inset 0 0 30px rgba(255, 0, 0, 0.2);
+    padding: 30px;
+    backdrop-filter: blur(2px);
+}
+
+/* HEADER + NAVIGASI */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 2px solid #ff3333;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.logo {
+    font-size: 28px;
+    font-weight: bold;
+    letter-spacing: 3px;
+    text-shadow: 0 0 15px #ff0000;
+}
+
+.logo span {
+    font-size: 32px;
+    filter: drop-shadow(0 0 10px #ff0000);
+}
+
+.nav {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.nav a {
+    color: #ff3333;
+    text-decoration: none;
+    padding: 8px 15px;
+    border: 1px solid #ff3333;
+    transition: 0.3s;
+    font-size: 16px;
+    letter-spacing: 2px;
+}
+
+.nav a:hover {
+    background: #ff3333;
+    color: #1a0000;
+    box-shadow: 0 0 20px #ff0000;
+}
+
+.nav a.active {
+    background: #ff3333;
+    color: #1a0000;
+}
+
+/* STATUS BAR */
+.status-bar {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border: 1px solid #ff3333;
+    margin-bottom: 20px;
+    font-size: 14px;
+    background: rgba(255, 0, 0, 0.05);
+}
+
+.blink {
+    animation: blinkRed 2s infinite;
+}
+
+@keyframes blinkRed {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+/* TERMINAL */
+.terminal {
+    border: 1px solid #ff3333;
+    padding: 20px;
+    margin: 20px 0;
+    background: rgba(0, 0, 0, 0.5);
+    box-shadow: inset 0 0 20px rgba(255, 0, 0, 0.2);
+}
+
+.line {
+    margin: 8px 0;
+    border-bottom: 1px dashed rgba(255, 51, 51, 0.3);
+    padding: 5px 0;
+}
+
+/* GRID UNTUK TOMBOL */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin: 30px 0;
+}
+
+/* TOMBOL */
+button {
+    background: transparent;
+    border: 2px solid #ff3333;
+    color: #ff3333;
+    padding: 15px 20px;
+    font-family: 'Courier New', monospace;
+    font-size: 16px;
+    letter-spacing: 2px;
+    cursor: pointer;
+    width: 100%;
+    transition: 0.3s;
+    position: relative;
+    overflow: hidden;
+    text-transform: uppercase;
+}
+
+button:hover {
+    background: #ff3333;
+    color: #1a0000;
+    box-shadow: 0 0 30px #ff0000;
+    transform: scale(1.02);
+}
+
+button::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: 0.5s;
+}
+
+button:hover::before {
+    left: 100%;
+}
+
+/* OUTPUT AREA */
+.output {
+    margin: 20px 0;
+    padding: 15px;
+    border: 1px solid #ff3333;
+    min-height: 100px;
+    background: rgba(0, 0, 0, 0.7);
+    color: #ff3333;
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+/* WARNING */
+.warning {
+    text-align: center;
+    margin: 30px 0;
+    padding: 20px;
+    border: 2px solid #ff3333;
+    background: rgba(255, 0, 0, 0.05);
+    font-size: 18px;
+    animation: warningGlow 2s infinite;
+}
+
+@keyframes warningGlow {
+    0%, 100% { border-color: #ff3333; box-shadow: 0 0 20px rgba(255, 0, 0, 0.3); }
+    50% { border-color: #ffffff; box-shadow: 0 0 40px rgba(255, 255, 255, 0.3); }
+}
+
+/* CARD */
+.card {
+    border-left: 4px solid #ff3333;
+    padding: 15px 20px;
+    margin: 20px 0;
+    background: rgba(255, 0, 0, 0.03);
+}
+
+/* FOOTER */
+.footer {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 2px solid #ff3333;
+    font-size: 12px;
+    color: #ff3333;
+    opacity: 0.7;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+/* SCROLLBAR */
+::-webkit-scrollbar {
+    width: 8px;
+    background: #1a0000;
+}
+
+::-webkit-scrollbar-track {
+    border: 1px solid #ff3333;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #ff3333;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #ffffff;
+}
+
+/* CURSOR */
+.cursor {
+    animation: blinkCursor 1s infinite;
+}
+
+@keyframes blinkCursor {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+}
+
+/* RESPONSIVE */
+@media (max-width: 600px) {
+    .header {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .grid {
+        grid-template-columns: 1fr;
+    }
+}

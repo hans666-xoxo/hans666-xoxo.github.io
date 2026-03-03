@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HANS666 █▓▒░ RED ZONE ░▒▓█</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- HEADER DENGAN MAHKOTA -->
+        <div class="header">
+            <div class="logo">
+                <span>👑</span> HANS666 <span>👑</span>
+            </div>
+            <div class="nav">
+                <a href="index.html" class="active">[HOME]</a>
+                <a href="stats.html">[STATS]</a>
+                <a href="danger.html">[DANGER]</a>
+            </div>
+        </div>
+
+        <!-- STATUS BAR -->
+        <div class="status-bar">
+            <span>> STATUS: <span class="blink">ACTIVE</span></span>
+            <span>> TIME: <span id="time">23:59:47</span></span>
+            <span>> VISITORS: <span id="visitorCount">0</span></span>
+        </div>
+
+        <!-- TERMINAL AREA -->
+        <div class="terminal">
+            <div class="line">> ACCESSING HANS666 SYSTEM...</div>
+            <div class="line">> IDENTITY CONFIRMED: <span class="blink">HANS666</span></div>
+            <div class="line">> CLEARANCE LEVEL: <span style="color:#ff0000">███████</span></div>
+            <div class="line">> CURRENT ZONE: RED SECTOR</div>
+            <div class="line">> <span class="cursor">_</span></div>
+        </div>
+
+        <!-- CARD INFORMASI -->
+        <div class="card">
+            <h2>═══ WELCOME TO THE DARK SIDE ═══</h2>
+            <p>> Selamat datang di markas digital HANS666.</p>
+            <p>> Semua aktivitas di sini dipantau.</p>
+            <p>> Jangan coba-coba macam-macam.</p>
+        </div>
+
+        <!-- OUTPUT AREA (BUAT HASIL TOMBOL) -->
+        <div class="output" id="outputArea">
+            > [SYSTEM READY] MENUNGGU PERINTAH...
+        </div>
+
+        <!-- GRID TOMBOL INTERAKTIF -->
+        <div class="grid">
+            <button id="crimeBtn">[ KRIMINALITAS ]</button>
+            <button id="colorBtn">[ ACAK WARNA ]</button>
+            <button id="ipBtn">[ LACAK IP ]</button>
+            <button id="destructBtn">[ SELF DESTRUCT ]</button>
+        </div>
+
+        <!-- WARNING -->
+        <div class="warning">
+            ⚠️ ACCESS WILL BE LOGGED ⚠️
+        </div>
+
+        <!-- FOOTER -->
+        <div class="footer">
+            <div>> IP: <span id="footerIp">192.168.xxx.xxx</span></div>
+            <div>> DEVICE: ANDROID 7</div>
+            <div>> STATUS: WATCHING YOU</div>
+        </div>
+    </div>
+
+    <script>
+        // ==================== VARIABLES ====================
+        const output = document.getElementById('outputArea');
+        let destructCount = 0;
+        
+        // ==================== WAKTU REAL ====================
+        function updateTime() {
+            const now = new Date();
+            const timeString = now.getHours().toString().padStart(2, '0') + ':' +
+                              now.getMinutes().toString().padStart(2, '0') + ':' +
+                              now.getSeconds().toString().padStart(2, '0');
+            document.getElementById('time').textContent = timeString;
+        }
+        setInterval(updateTime, 1000);
+        updateTime();
+
+        // ==================== VISITOR COUNT ====================
+        let count = localStorage.getItem('visitCount') || 0;
+        count++;
+        localStorage.setItem('visitCount', count);
+        document.getElementById('visitorCount').textContent = count;
+
+        // ==================== TOMBOL KRIMINALITAS ====================
+        document.getElementById('crimeBtn').addEventListener('click', function() {
+            const crimes = [
+                'Mengakses dark web tanpa izin',
+                'Mencoba membobol sistem',
+                'Menyembunyikan identitas',
+                'Menggunakan VPN terlarang',
+                'Melakukan brute force attack',
+                'Menyusup ke database',
+                'Mengintip aktivitas orang lain',
+                'Menyimpan data ilegal'
+            ];
+            
+            output.innerHTML = '';
+            for(let i = 0; i < 3; i++) {
+                const random = crimes[Math.floor(Math.random() * crimes.length)];
+                output.innerHTML += '> ⚠️ KRIMINALITAS TERDETEKSI: ' + random + '<br>';
+            }
+            output.innerHTML += '> 🔴 DATA TERSIMPAN. MENUNGGU EKSEKUSI...';
+            
+            this.style.background = '#ff3333';
+            this.style.color = '#1a0000';
+            setTimeout(() => {
+                this.style.background = 'transparent';
+                this.style.color = '#ff3333';
+            }, 300);
+        });
+
+        // ==================== TOMBOL ACAK WARNA ====================
+        document.getElementById('colorBtn').addEventListener('click', function() {
+            const reds = [
+                '#1a0000', '#200000', '#2a0000', '#300000', '#3a0000'
+            ];
+            const randomBg = reds[Math.floor(Math.random() * reds.length)];
+            document.body.style.background = randomBg;
+            
+            output.innerHTML = '> BACKGROUND DIUBAH KE: ' + randomBg + '<br>';
+            output.innerHTML += '> SUASANA HATI: LEBIH KELAM';
+            
+            this.style.transform = 'scale(0.95)';
+            setTimeout(() => this.style.transform = 'scale(1)', 200);
+        });
+
+        // ==================== TOMBOL LACAK IP ====================
+        document.getElementById('ipBtn').addEventListener('click', function() {
+            output.innerHTML = '> MELACAK ALAMAT IP...<br>';
+            
+            fetch('https://api.ipify.org?format=json')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('footerIp').textContent = data.ip;
+                    output.innerHTML += '> IP ANDA: ' + data.ip + '<br>';
+                    output.innerHTML += '> LOKASI: [DATA REDACTED]<br>';
+                    output.innerHTML += '> PERANGKAT: ANDROID 7<br>';
+                    output.innerHTML += '> STATUS: <span style="color:#ff0000">TERLACAK</span>';
+                })
+                .catch(() => {
+                    output.innerHTML += '> GAGAL MELACAK.<br>';
+                    output.innerHTML += '> ANDA AMAN... UNTUK SEKARANG.';
+                });
+        });
+
+        // ==================== TOMBOL SELF DESTRUCT ====================
+        document.getElementById('destructBtn').addEventListener('click', function() {
+            destructCount++;
+            
+            if(destructCount < 3) {
+                output.innerHTML = '> ⚠️ PERINGATAN! ' + (3 - destructCount) + ' KALI LAGI UNTUK AKTIVASI.<br>';
+                output.innerHTML += '> YAKIN MAU MENGHANCURKAN SISTEM?';
+            } else {
+                output.innerHTML = '> 💀 SELF DESTRUCTION ACTIVATED 💀<br>';
+                output.innerHTML += '> 10... 9... 8...';
+                
+                let countdown = 10;
+                const interval = setInterval(() => {
+                    countdown--;
+                    output.innerHTML = '> 💀 SELF DESTRUCTION: ' + countdown + '...';
+                    
+                    if(countdown === 0) {
+                        clearInterval(interval);
+                        document.body.innerHTML = `
+                            <div style="color:#ff3333; text-align:center; margin-top:50vh; font-size:24px;">
+                                💀 SYSTEM DESTROYED 💀<br>
+                                <span style="font-size:16px;">created by HANS666</span>
+                            </div>
+                        `;
+                    }
+                }, 1000);
+                
+                destructCount = 0;
+            }
+        });
+    </script>
+</body>
+</html>
