@@ -313,3 +313,52 @@ button:hover::before {
         padding: 15px 20px;
     }
 }
+/* Tambahin di style.css */
+.rain {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    background: linear-gradient(0deg, 
+        rgba(0,255,0,0.05) 0%, 
+        transparent 10%);
+    animation: rain 0.5s linear infinite;
+    z-index: 9999;
+}
+
+@keyframes rain {
+    from { background-position: 0 0; }
+    to { background-position: 0 20px; }
+}
+/* CSS buat canvas */
+#matrix {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    opacity: 0.3;
+    pointer-events: none;
+}
+/* CSS nya */
+.progress-container {
+    border: 1px solid #0f0;
+    height: 30px;
+    margin: 20px 0;
+    position: relative;
+}
+
+.progress-bar {
+    width: 0%;
+    height: 100%;
+    background: #0f0;
+    transition: width 0.3s;
+}
+
+#progressText {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    color: #000;
+}

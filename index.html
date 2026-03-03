@@ -64,5 +64,101 @@
             alert(`ACCESS CODE: ${randomCode}\nLOGGED TO DATABASE.`);
         });
     </script>
+<audio id="bgSound" loop>
+    <source src="kaciw.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+    // Puter sound pas pertama kali buka
+    window.addEventListener('load', function() {
+        document.getElementById('bgSound').play();
+    });
+</script>
 </body>
 </html>
+<canvas id="matrix"></canvas>
+
+<script>
+    const canvas = document.getElementById('matrix');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    
+    const ctx = canvas.getContext('2d');
+    const chars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
+    const fontSize = 16;
+    const columns = canvas.width / fontSize;
+    const drops = [];
+    
+    for (let x = 0; x < columns; x++) drops[x] = 1;
+    
+    function draw() {
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = '#0f0';
+        ctx.font = fontSize + 'px monospace';
+        
+        for (let i = 0; i < drops.length; i++) {
+            const text = chars.charAt(Math.floor(Math.random() * chars.length));
+            ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+            
+            if (drops[i] * fontSize > canvas.height && Math.random() > 0.975)
+                drops[i] = 0;
+            drops[i]++;
+        }
+    }
+    
+    setInterval(draw, 35);
+</script>
+<div class="typing-terminal">
+    <span id="typingText"></span><span class="cursor">_</span>
+</div>
+
+<script>
+    const texts = [
+        "> ACCESSING MAINFRAME...",
+        "> BYPASSING FIREWALL...",
+        "> DECRYPTING DATA...",
+        "> CONNECTION ESTABLISHED."
+    ];
+    
+    let index = 0;
+    let charIndex = 0;
+    let currentText = '';
+    
+    function type() {
+        if (index < texts.length) {
+            currentText = texts[index];
+            if (charIndex < currentText.length) {
+                document.getElementById('typingText').textContent += currentText.charAt(charIndex);
+                charIndex++;
+                setTimeout(type, 50);
+            } else {
+                charIndex = 0;
+                index++;
+                setTimeout(() => {
+                    document.getElementById('typingText').textContent = '';
+                    type();
+                }, 1000);
+            }
+        }
+    }
+    type();
+</script>
+<div class="progress-container">
+    <div class="progress-bar" id="progressBar"></div>
+    <span id="progressText">0%</span>
+</div>
+
+<script>
+    let progress = 0;
+    const interval = setInterval(() => {
+        progress += 1;
+        document.getElementById('progressBar').style.width = progress + '%';
+        document.getElementById('progressText').textContent = progress + '%';
+        
+        if (progress >= 100) {
+            clearInterval(interval);
+            document.getElementById('progressText').textContent = 'ACCESS GRANTED';
+        }
+    }, 100);
+</script>
