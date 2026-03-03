@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOOD • HANS666 IS HERE!!</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body id="mainBody">
+    <div class="container">
+        <!-- HEADER -->
+        <div class="header">
+            <div class="logo">👑 HANS666 👑</div>
+            <div class="nav">
+                <a href="index.html">HOME</a>
+                <a href="play.html">PLAY</a>
+                <a href="mood.html" class="active">MOOD</a>
+                <a href="secret.html">SECRET</a>
+            </div>
+        </div>
+
+        <h1 style="text-align: center; margin-bottom: 20px;">🌈 MOOD BOARD</h1>
+
+        <!-- COLOR PICKER -->
+        <div class="color-picker">
+            <div class="color-option" style="background: linear-gradient(135deg, #0a0010, #2a0044);" onclick="changeMood('ungu')" id="colorUngu"></div>
+            <div class="color-option" style="background: linear-gradient(135deg, #001020, #004466);" onclick="changeMood('biru')" id="colorBiru"></div>
+            <div class="color-option" style="background: linear-gradient(135deg, #200010, #660044);" onclick="changeMood('pink')" id="colorPink"></div>
+            <div class="color-option" style="background: linear-gradient(135deg, #102000, #336600);" onclick="changeMood('hijau')" id="colorHijau"></div>
+            <div class="color-option" style="background: linear-gradient(135deg, #200800, #663300);" onclick="changeMood('coklat')" id="colorCoklat"></div>
+            <div class="color-option" style="background: linear-gradient(135deg, #200020, #660066);" onclick="changeMood('magenta')" id="colorMagenta"></div>
+        </div>
+
+        <!-- MOOD CARDS -->
+        <div class="grid">
+            <div class="mood-card" onclick="setMood('tenang')">
+                <div class="mood-emoji">😌</div>
+                <h3>TENANG</h3>
+                <p>Santuy mode</p>
+            </div>
+            <div class="mood-card" onclick="setMood('semangat')">
+                <div class="mood-emoji">🔥</div>
+                <h3>SEMANGAT</h3>
+                <p>Gas pol!</p>
+            </div>
+            <div class="mood-card" onclick="setMood('galau')">
+                <div class="mood-emoji">🥺</div>
+                <h3>GALAU</h3>
+                <p>Mellow mode</p>
+            </div>
+            <div class="mood-card" onclick="setMood('ngambek')">
+                <div class="mood-emoji">😤</div>
+                <h3>NGAMBEK</h3>
+                <p>Jangan diganggu</p>
+            </div>
+        </div>
+
+        <!-- CURRENT MOOD -->
+        <div class="card" style="text-align: center;">
+            <div style="font-size: 24px;">MOOD SEKARANG</div>
+            <div style="font-size: 48px; margin: 20px 0;" id="currentMoodEmoji">😐</div>
+            <div style="font-size: 20px;" id="currentMoodText">-</div>
+        </div>
+
+        <!-- MOOD COUNTER -->
+        <div class="card" style="text-align: center;">
+            <div>MOOD CHANGES</div>
+            <div style="font-size: 48px;" id="moodCounter">0</div>
+        </div>
+
+        <!-- OUTPUT -->
+        <div class="output" id="output">
+            > PILIH WARNA ATAU MOOD.
+        </div>
+
+        <!-- FOOTER -->
+        <div class="footer">
+            <div>> MOOD • SESUAIKAN SUASANA</div>
+            <div>> HANS666 IS HERE!!</div>
+        </div>
+    </div>
+
+    <script>
+        let moodCount = localStorage.getItem('moodCount') || 0;
+        document.getElementById('moodCounter').textContent = moodCount;
+        const output = document.getElementById('output');
+        const body = document.getElementById('mainBody');
+
+        function updateMoodCount() {
+            moodCount++;
+            localStorage.setItem('moodCount', moodCount);
+            document.getElementById('moodCounter').textContent = moodCount;
+        }
+
+        window.changeMood = function(warna) {
+            const colors = {
+                ungu: ['#0a0010', '#1a0033', '#2a0044'],
+                biru: ['#001020', '#003366', '#004488'],
+                pink: ['#200010', '#440033', '#660044'],
+                hijau: ['#102000', '#204400', '#336600'],
+                coklat: ['#200800', '#442200', '#663300'],
+                magenta: ['#200020', '#440044', '#660066']
+            };
+            
+            const selected = colors[warna];
+            body.style.background = `linear-gradient(135deg, ${selected[0]}, ${selected[1]}, ${selected[2]})`;
+            output.innerHTML = `> WARNA DIUBAH KE: ${warna.toUpperCase()}`;
+            
+            // Update active color
+            document.querySelectorAll('.color-option').forEach(el => {
+                el.classList.remove('active');
+            });
+            document.getElementById('color' + warna.charAt(0).toUpperCase() + warna.slice(1)).classList.add('active');
+            
+            updateMoodCount();
+        };
+
+        window.setMood = function(mood) {
+            const moods = {
+                tenang: { emoji: '😌', text: 'TENANG • SANTUY' },
+                semangat: { emoji: '🔥', text: 'SEMANGAT • GAS POL' },
+                galau: { emoji: '🥺', text: 'GALAU • MELOW' },
+                ngambek: { emoji: '😤', text: 'NGAMBEK • JANGAN DIGANGGU' }
+            };
+            
+            document.getElementById('currentMoodEmoji').textContent = moods[mood].emoji;
+            document.getElementById('currentMoodText').textContent = moods[mood].text;
+            output.innerHTML = `> MOOD: ${moods[mood].text}`;
+            updateMoodCount();
+        };
+    </script>
+</body>
+</html>

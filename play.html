@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PLAY • HANS666 IS HERE!!</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body id="mainBody">
+    <div class="container">
+        <!-- HEADER -->
+        <div class="header">
+            <div class="logo">👑 HANS666 👑</div>
+            <div class="nav">
+                <a href="index.html">HOME</a>
+                <a href="play.html" class="active">PLAY</a>
+                <a href="mood.html">MOOD</a>
+                <a href="secret.html">SECRET</a>
+            </div>
+        </div>
+
+        <h1 style="text-align: center; margin-bottom: 20px;">🎮 PLAYGROUND</h1>
+
+        <!-- GAME GRID -->
+        <div class="grid">
+            <div class="card mood-card" id="game1">
+                <div class="mood-emoji">🔮</div>
+                <h3>MAGIC BALL</h3>
+                <p>Klik buat ramalan</p>
+            </div>
+            <div class="card mood-card" id="game2">
+                <div class="mood-emoji">🎲</div>
+                <h3>DADU</h3>
+                <p>Lempar dadu</p>
+            </div>
+            <div class="card mood-card" id="game3">
+                <div class="mood-emoji">🪙</div>
+                <h3>COIN FLIP</h3>
+                <p>Lempar koin</p>
+            </div>
+            <div class="card mood-card" id="game4">
+                <div class="mood-emoji">🎰</div>
+                <h3>LOTTERY</h3>
+                <p>Jackpot?</p>
+            </div>
+        </div>
+
+        <!-- COUNTER -->
+        <div class="card" style="text-align: center;">
+            <div style="font-size: 24px;">PLAY COUNT</div>
+            <div style="font-size: 72px; margin: 20px 0;" id="playCounter">0</div>
+            <button class="btn" id="resetPlay">RESET</button>
+        </div>
+
+        <!-- OUTPUT -->
+        <div class="output" id="output">
+            > PILIH GAME DI ATAS.
+        </div>
+
+        <!-- FOOTER -->
+        <div class="footer">
+            <div>> PLAY • JANGAN KETAGIHAN</div>
+            <div>> HANS666 IS HERE!!</div>
+        </div>
+    </div>
+
+    <script>
+        let playCount = localStorage.getItem('playCount') || 0;
+        document.getElementById('playCounter').textContent = playCount;
+        const output = document.getElementById('output');
+
+        function updatePlayCount() {
+            playCount++;
+            localStorage.setItem('playCount', playCount);
+            document.getElementById('playCounter').textContent = playCount;
+        }
+
+        document.getElementById('game1').addEventListener('click', function() {
+            const answers = ['Yes', 'No', 'Maybe', 'Ask again', 'Definitely', 'Never'];
+            const random = answers[Math.floor(Math.random() * answers.length)];
+            output.innerHTML = '> 🔮 MAGIC BALL: ' + random;
+            updatePlayCount();
+        });
+
+        document.getElementById('game2').addEventListener('click', function() {
+            const dice = Math.floor(Math.random() * 6) + 1;
+            output.innerHTML = '> 🎲 DADU: ' + dice;
+            updatePlayCount();
+        });
+
+        document.getElementById('game3').addEventListener('click', function() {
+            const coin = Math.random() < 0.5 ? 'HEADS' : 'TAILS';
+            output.innerHTML = '> 🪙 COIN: ' + coin;
+            updatePlayCount();
+        });
+
+        document.getElementById('game4').addEventListener('click', function() {
+            const lottery = Math.floor(Math.random() * 100) + 1;
+            if(lottery === 100) {
+                output.innerHTML = '> 🎰 JACKPOT! LO DAPET 1 JUTA POIN! (tapi boong)';
+            } else {
+                output.innerHTML = '> 🎰 LOTTERY: ' + lottery + ' - COBA LAGI';
+            }
+            updatePlayCount();
+        });
+
+        document.getElementById('resetPlay').addEventListener('click', function() {
+            playCount = 0;
+            localStorage.setItem('playCount', 0);
+            document.getElementById('playCounter').textContent = 0;
+            output.innerHTML = '> PLAY COUNT DI-RESET.';
+        });
+    </script>
+</body>
+</html>

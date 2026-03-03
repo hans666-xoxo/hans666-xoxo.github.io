@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HANS666 IS HERE!!</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body id="mainBody">
+    <div class="container">
+        <!-- HEADER -->
+        <div class="header">
+            <div class="logo float">👑 HANS666 👑</div>
+            <div class="nav">
+                <a href="index.html" class="active">HOME</a>
+                <a href="play.html">PLAY</a>
+                <a href="mood.html">MOOD</a>
+                <a href="secret.html">SECRET</a>
+            </div>
+        </div>
+
+        <!-- WELCOME CARD -->
+        <div class="card" style="text-align: center;">
+            <h1 style="font-size: 48px; margin-bottom: 20px; background: linear-gradient(45deg, #c07cff, #f0c0ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                HANS666 IS HERE!!
+            </h1>
+            <p style="font-size: 20px; color: #d4b3ff;">Welcome to the dark side of elegance.</p>
+            <p style="margin-top: 20px;">4 halaman seru buat lo main-main.</p>
+        </div>
+
+        <!-- QUOTE CARD -->
+        <div class="card" style="text-align: center;">
+            <div style="font-size: 24px; margin-bottom: 15px;">✨ RANDOM QUOTE ✨</div>
+            <div id="quote" style="font-size: 20px; font-style: italic; margin-bottom: 20px;">"Loading..."</div>
+            <button class="btn btn-outline" id="newQuoteBtn" style="margin: 0 auto;">[ QUOTE LAIN ]</button>
+        </div>
+
+        <!-- GRID FITUR HACKER -->
+        <div class="grid">
+            <div class="card mood-card" id="ipBtn">
+                <div class="mood-emoji">🕵️</div>
+                <h3>LACAK IP</h3>
+                <p>Klik buat lihat IP lo</p>
+            </div>
+            <div class="card mood-card" id="hackBtn">
+                <div class="mood-emoji">💻</div>
+                <h3>FAKE HACK</h3>
+                <p>Simulasi hack</p>
+            </div>
+            <div class="card mood-card" id="crashBtn">
+                <div class="mood-emoji">💥</div>
+                <h3>CRASH SITE</h3>
+                <p>Bikin hancur (sementara)</p>
+            </div>
+            <div class="card mood-card" id="glitchBtn">
+                <div class="mood-emoji">⚡</div>
+                <h3>GLITCH MODE</h3>
+                <p>Efek glitch</p>
+            </div>
+        </div>
+
+        <!-- OUTPUT AREA -->
+        <div class="output" id="output">
+            > SYSTEM READY. KLIK TOMBOL APAPUN.
+        </div>
+
+        <!-- PROGRESS BAR -->
+        <div style="margin: 30px 0;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                <span>SYSTEM STATUS</span>
+                <span id="statusPercent">100%</span>
+            </div>
+            <div class="progress-container">
+                <div class="progress-bar" id="systemStatus" style="width: 100%;"></div>
+            </div>
+        </div>
+
+        <!-- STATS -->
+        <div class="grid">
+            <div class="card" style="text-align: center;">
+                <div>VISITORS</div>
+                <div style="font-size: 36px;" id="visitorCount">0</div>
+            </div>
+            <div class="card" style="text-align: center;">
+                <div>IP ANDA</div>
+                <div style="font-size: 16px;" id="userIP">-</div>
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <div class="footer">
+            <div>> HANS666 IS HERE!!</div>
+            <div>> 2025 • UNGU HITAM VIBE</div>
+        </div>
+    </div>
+
+    <script>
+        // ==================== DATA ====================
+        let visitors = localStorage.getItem('visitCount') || 0;
+        visitors++;
+        localStorage.setItem('visitCount', visitors);
+        document.getElementById('visitorCount').textContent = visitors;
+
+        const output = document.getElementById('output');
+        const body = document.getElementById('mainBody');
+
+        // ==================== IP TRACKING ====================
+        fetch('https://api.ipify.org?format=json')
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById('userIP').textContent = data.ip;
+            })
+            .catch(() => {
+                document.getElementById('userIP').textContent = '192.168.xxx.xxx';
+            });
+
+        // ==================== QUOTES ====================
+        const quotes = [
+            "The darker the night, the brighter the stars.",
+            "HANS666 is always watching.",
+            "Ungu hitam vibes only.",
+            "Jangan lupa makan.",
+            "Klik tombol di PLAY buat seru-seruan.",
+            "Mood lo bisa diganti di halaman MOOD.",
+            "Ada secret buat yang penasaran."
+        ];
+        
+        function showRandomQuote() {
+            const random = quotes[Math.floor(Math.random() * quotes.length)];
+            document.getElementById('quote').textContent = '"' + random + '"';
+        }
+        showRandomQuote();
+
+        document.getElementById('newQuoteBtn').addEventListener('click', () => {
+            showRandomQuote();
+            output.innerHTML = '> QUOTE DIGANTI. MANTAP.';
+        });
+
+        // ==================== LACAK IP ====================
+        document.getElementById('ipBtn').addEventListener('click', function() {
+            fetch('https://api.ipify.org?format=json')
+                .then(res => res.json())
+                .then(data => {
+                    output.innerHTML = '> 🕵️ IP ANDA: ' + data.ip + '<br>> LOKASI: [DATA REDACTED]<br>> STATUS: TERLACAK';
+                })
+                .catch(() => {
+                    output.innerHTML = '> 🕵️ GAGAL MELACAK. PAKAI VPN?';
+                });
+        });
+
+        // ==================== FAKE HACK ====================
+        document.getElementById('hackBtn').addEventListener('click', function() {
+            output.innerHTML = '> 💻 MEMULAI HACK...\n';
+            let progress = 0;
+            const statusBar = document.getElementById('systemStatus');
+            const statusPercent = document.getElementById('statusPercent');
+            
+            const interval = setInterval(() => {
+                progress += 5;
+                if(progress <= 100) {
+                    statusBar.style.width = (100 - progress) + '%';
+                    statusPercent.textContent = (100 - progress) + '%';
+                    output.innerHTML += '> HACK PROGRESS: ' + progress + '%\n';
+                }
+                if(progress >= 100) {
+                    clearInterval(interval);
+                    output.innerHTML += '> 💀 SYSTEM HACKED! MENCARI BACKUP...\n';
+                    setTimeout(() => {
+                        statusBar.style.width = '100%';
+                        statusPercent.textContent = '100%';
+                        output.innerHTML += '> ✅ SYSTEM RESTORED. AMAN.\n';
+                    }, 2000);
+                }
+            }, 200);
+        });
+
+        // ==================== CRASH SITE ====================
+        let crashCount = 0;
+        document.getElementById('crashBtn').addEventListener('click', function() {
+            crashCount++;
+            
+            if(crashCount < 3) {
+                output.innerHTML = '> ⚠️ PERINGATAN! ' + (3-crashCount) + ' KALI LAGI SITE AKAN HANCUR';
+            } else {
+                output.innerHTML = '> 💥 SITE CRASH! SELF DESTRUCT ACTIVATED!\n';
+                
+                // Efek hancur
+                document.querySelector('.container').style.transform = 'scale(0.1) rotate(360deg)';
+                document.querySelector('.container').style.opacity = '0';
+                document.body.style.background = 'black';
+                
+                setTimeout(() => {
+                    document.querySelector('.container').style.transform = 'scale(1) rotate(0deg)';
+                    document.querySelector('.container').style.opacity = '1';
+                    document.body.style.background = 'linear-gradient(135deg, #0a0010, #1a0033, #2a0044)';
+                    output.innerHTML += '> 🔄 SYSTEM REBOOT... SELAMAT DATANG KEMBALI.';
+                }, 3000);
+                
+                crashCount = 0;
+            }
+        });
+
+        // ==================== GLITCH MODE ====================
+        document.getElementById('glitchBtn').addEventListener('click', function() {
+            output.innerHTML = '> ⚡ GLITCH MODE ACTIVATED!';
+            
+            // Efek glitch
+            const interval = setInterval(() => {
+                if(Math.random() > 0.7) {
+                    document.querySelector('.container').style.transform = 'skew(' + (Math.random()*10-5) + 'deg)';
+                    document.querySelector('.container').style.filter = 'hue-rotate(' + Math.random()*360 + 'deg)';
+                }
+            }, 100);
+            
+            setTimeout(() => {
+                clearInterval(interval);
+                document.querySelector('.container').style.transform = 'skew(0deg)';
+                document.querySelector('.container').style.filter = 'none';
+                output.innerHTML += '\n> GLITCH MODE DEACTIVATED.';
+            }, 5000);
+        });
+
+        // ==================== PROGRESS BAR UPDATE ====================
+        function updateStatus() {
+            const random = Math.floor(Math.random() * 10);
+            const current = parseInt(document.getElementById('systemStatus').style.width) || 100;
+            if(random > 7 && current > 30) {
+                document.getElementById('systemStatus').style.width = (current - 1) + '%';
+                document.getElementById('statusPercent').textContent = (current - 1) + '%';
+            }
+        }
+        setInterval(updateStatus, 3000);
+    </script>
+</body>
+</html>
